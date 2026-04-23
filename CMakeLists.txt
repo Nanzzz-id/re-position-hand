@@ -1,26 +1,21 @@
 cmake_minimum_required(VERSION 3.10.2)
-
 project("LeviViewModel")
 
-# Include directories
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/imgui
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/imgui/backends
+# Folder include
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/imgui)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/imgui/backends)
+
+# Cari semua file .cpp di src dan imgui
+file(GLOB_RECURSE SOURCES 
+    "src/*.cpp"
+    "src/imgui/*.cpp"
+    "src/imgui/backends/*.cpp"
 )
 
-# Source files
-file(GLOB_RECURSE IMGUI_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/imgui/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/imgui/backends/*.cpp
-)
+add_library(LeviViewModel SHARED ${SOURCES})
 
-add_library(LeviViewModel SHARED
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
-    ${IMGUI_SOURCES}
-)
-
-# Link libraries
+# Link library standar Android
 target_link_libraries(LeviViewModel
     android
     log
